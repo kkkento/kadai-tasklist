@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Tasklist;
+import models.Task;
 import utils.DBUtil;
 
 /**
@@ -35,12 +35,12 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        List<Tasklist> tasklist= em.createNamedQuery("getAllTasklist", Tasklist.class).getResultList();
-        response.getWriter().append(Integer.valueOf(tasklist.size()).toString());
+        List<Task> task= em.createNamedQuery("getAllTasklist", Task.class).getResultList();
+        response.getWriter().append(Integer.valueOf(task.size()).toString());
 
         em.close();
 
-        request.setAttribute("tasklist", tasklist);
+        request.setAttribute("task", task);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasklist/index.jsp");
         rd.forward(request, response);
